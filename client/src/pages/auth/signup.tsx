@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SiGoogle, SiApple, SiMicrosoft } from "react-icons/si";
+import { SiGoogle, SiApple, SiMicrosoft365 } from "react-icons/si";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -281,7 +281,7 @@ export default function Signup() {
                   <SiApple className="w-5 h-5" />
                 </Button>
                 <Button variant="outline" className="w-full">
-                  <SiMicrosoft className="w-5 h-5" />
+                  <SiMicrosoft365 className="w-5 h-5" />
                 </Button>
               </div>
 

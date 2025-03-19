@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SiGoogle, SiApple, SiMicrosoft } from "react-icons/si";
+import { SiGoogle, SiApple, SiMicrosoftonedrive } from "react-icons/si";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -159,7 +159,7 @@ export default function Login() {
                   <SiApple className="w-5 h-5" />
                 </Button>
                 <Button variant="outline" className="w-full">
-                  <SiMicrosoft className="w-5 h-5" />
+                  <SiMicrosoftonedrive className="w-5 h-5" />
                 </Button>
               </div>
 
