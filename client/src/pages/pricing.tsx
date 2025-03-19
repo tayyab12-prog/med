@@ -23,7 +23,7 @@ const pricingPlans = [
     ],
     action: "CHOOSE PLAN",
     href: "/contact",
-    gradient: "from-[#4F46E5] to-[#7C3AED]"
+    gradient: "from-blue-500 to-blue-600"
   },
   {
     name: "Pro",
@@ -36,7 +36,7 @@ const pricingPlans = [
     ],
     action: "CHOOSE PLAN",
     href: "/contact",
-    gradient: "from-[#EC4899] to-[#9F7AEA]"
+    gradient: "from-pink-500 to-purple-500"
   },
   {
     name: "Enterprise",
@@ -50,7 +50,7 @@ const pricingPlans = [
     ],
     action: "CONTACT US",
     href: "/contact",
-    gradient: "from-[#3B82F6] to-[#2563EB]"
+    gradient: "from-blue-600 to-blue-700"
   }
 ];
 
