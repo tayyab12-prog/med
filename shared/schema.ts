@@ -8,7 +8,7 @@ export const analyses = pgTable("analyses", {
   findings: text("findings"),
   imageUrl: text("image_url").notNull(),
   status: text("status").default("pending"),
-  chatHistory: jsonb("chat_history").$type<{message: string, sender: string}[]>().default([]),
+  chatHistory: jsonb("chat_history").$type<{message: string, sender: "user" | "bot"}[]>().default([]),
 });
 
 export const insertAnalysisSchema = createInsertSchema(analyses).pick({
