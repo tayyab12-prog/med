@@ -61,6 +61,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/download/:filename", (req, res) => {
+    try {
+      const filename = req.params.filename;
+      const filePath = path.join(uploadsDir, filename);
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: "File not found" });
+      }
+
+      res.download(filePath);
+    } catch (error) {
+      console.error("Download error:", error);
+      res.status(500).json({ message: "Failed to download file" });
+    }
+  });
+
   app.post("/api/analysis/:id/chat", async (req, res) => {
     try {
       const id = Number(req.params.id);
