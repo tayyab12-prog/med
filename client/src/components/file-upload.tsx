@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload, X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface FileUploadProps {
   onUpload: (file: File, patientName: string) => void;
@@ -14,6 +15,7 @@ interface FileUploadProps {
 export default function FileUpload({ onUpload, isUploading }: FileUploadProps) {
   const [file, setFile] = useState<File | null>(null);
   const [patientName, setPatientName] = useState("");
+  const { toast } = useToast();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
@@ -21,7 +23,26 @@ export default function FileUpload({ onUpload, isUploading }: FileUploadProps) {
       "image/png": [".png"],
     },
     maxFiles: 1,
-    onDrop: ([file]) => setFile(file),
+    onDrop: ([acceptedFile]) => {
+      if (acceptedFile) {
+        if (acceptedFile.size > 5 * 1024 * 1024) { // 5MB limit
+          toast({
+            variant: "destructive",
+            title: "File too large",
+            description: "Please upload an image smaller than 5MB",
+          });
+          return;
+        }
+        setFile(acceptedFile);
+      }
+    },
+    onDropRejected: () => {
+      toast({
+        variant: "destructive",
+        title: "Invalid file",
+        description: "Please upload a JPEG or PNG image",
+      });
+    },
   });
 
   return (
@@ -37,6 +58,7 @@ export default function FileUpload({ onUpload, isUploading }: FileUploadProps) {
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
               className="mt-2"
+              placeholder="Enter patient name"
             />
           </div>
 
@@ -49,10 +71,10 @@ export default function FileUpload({ onUpload, isUploading }: FileUploadProps) {
             <input {...getInputProps()} />
             <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             <p className="text-gray-400">
-              Drag & drop files or <span className="text-blue-400">Browse</span>
+              Drag & drop X-ray image or <span className="text-blue-400">Browse</span>
             </p>
             <p className="text-sm text-gray-500 mt-2">
-              Supported formats: JPEG, PNG
+              Supported formats: JPEG, PNG (max 5MB)
             </p>
           </div>
 
@@ -62,7 +84,7 @@ export default function FileUpload({ onUpload, isUploading }: FileUploadProps) {
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center justify-between bg-gray-800 rounded p-3"
             >
-              <span className="text-gray-300">{file.name}</span>
+              <span className="text-gray-300 truncate flex-1 mr-2">{file.name}</span>
               <Button
                 variant="ghost"
                 size="icon"
