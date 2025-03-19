@@ -12,13 +12,20 @@ export default function Demo() {
   const { toast } = useToast();
 
   const { data: analysis } = useQuery<Analysis>({
-    queryKey: [`/api/analysis/${analysisId}`],
+    queryKey: analysisId ? [`/api/analysis/${analysisId}`] : [],
     enabled: !!analysisId,
   });
 
   const uploadMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const res = await apiRequest("POST", "/api/analysis", formData);
+      const res = await fetch("/api/analysis", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Upload failed");
+      }
       return res.json();
     },
     onSuccess: (data) => {
